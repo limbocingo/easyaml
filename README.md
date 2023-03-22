@@ -3,7 +3,7 @@ Create a YAML file easier in Java.
 **Attention! This mini-library is currently in progress.**
 
 # Examples
-Here is how you can to create a YAML file with the library.
+How to create a YAML file with the library.
 
 ```java
 import com.github.limbocingo.easyaml.Model;
