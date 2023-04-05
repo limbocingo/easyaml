@@ -1,6 +1,5 @@
 # EasYAML
 Create a YAML file easier in Java.
-**Attention! This mini-library is currently in progress.**
 
 # Examples
 How to create a YAML file with the library.
