@@ -1,7 +1,9 @@
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+
+
 
 /**
  * Parse a YAML file.
@@ -9,48 +11,60 @@ import java.util.List;
  * @version 0.0.1
  */
 public class Parser {
-    private File file;
+    public File file;
 
-    public Parser(String path) {
-        this.file = new File(path);
+    public Parser(File file) {
+        this.file = file;
     }
 
     /**
      * Get all the information of and YAML file.
-     * <p>
-     * return All the fields of the YAML file in a HashMap.
+     * 
+     * @return All the fields of the YAML file in a HashMap. 
      * @throws IOException If something happens opening the file.
+     * @throws ParseException
      */
-    public void content() throws IOException {
-        List<String> lines = this.file.lines();
+    public void content() throws IOException, ParseException {
+        String[] crud = this.file.read().split("\n");
+        
+        List<List<Object>> result = new ArrayList<>();
+        
+        Boolean inValue;
+        Boolean inString; 
 
-        for (String line : lines) {
-            StringBuilder key = new StringBuilder();
-            StringBuilder value = new StringBuilder();
+        char[] characters;
 
-            boolean inValue = false;
-            boolean inString = false;
+        for (String line : crud) {
+            inValue = false;
+            inString = false;
 
-            for (char character : line.toCharArray()) {
-                if (character != ':')
-                    key.append(character);
-                else {
+            characters = line.toCharArray();
+            
+            result.add(new ArrayList<>());
+
+            for (int i = 0; i < characters.length; i++) {
+                if (inValue && !inString && characters[i] == ':')
+                    throw new ParseException("You can't add more than one colon, you can add it if is in string only.", i);
+                
+                if (!inValue && characters[i] == ' ')
+                    continue;
+                
+                if (i == 0 && characters[i] == ':')
+                    throw new ParseException("You don't gived any key.", i);
+                
+                if (characters[i] == ':' && !inValue) {
                     inValue = true;
                     continue;
                 }
 
+                if (characters[i] == '"' && inString)
+                    inString = false;
                 
-
-                if (inString)
-                    value.append(character);
-
-                if (inValue && character == '"')
+                if (characters[i] == '"' && !inString)
                     inString = true;
 
-
+                
             }
-            System.out.println(key);
-            break;
         }
     }
 }

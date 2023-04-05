@@ -1,4 +1,4 @@
-public class Configuration extends Model {
+public class Configuration {
     private String URL;
     private String TOKEN;
 }
