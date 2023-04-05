@@ -11,6 +11,9 @@ import com.github.limbocingo.easyaml.Model;
 
 public class Configuration extends Model {
   private String TOKEN;
+  // You can add a default value if you want.
+  // Making something like this.
+  private String DATABASE="test-db";
 }
 ```
 
